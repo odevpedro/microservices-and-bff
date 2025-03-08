@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63b8ced8-18af-4f36-a443-0aa54a1d40f9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/src/main/java/br/com/odevpedro/user_service_api/UserServiceApiApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service-api/user-service-api/src/test/java/br/com/odevpedro/user_service_api/UserServiceApiApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +32,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2tld7R3h45OnOqO2q021GQJJ2gH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -54,8 +44,10 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/hope/Documents/desenv/helpdesk2/user-service-api"
+    "last_opened_file_path": "C:/Users/hope/Documents/desenv/helpdesk2/hd-commons-lib",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.archetype.catalogs"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
