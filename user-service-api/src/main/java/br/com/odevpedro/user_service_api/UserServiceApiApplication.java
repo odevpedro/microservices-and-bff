@@ -1,10 +1,9 @@
 package br.com.odevpedro.user_service_api;
 
-import br.com.odevpedro.hd_commons_lib.models.enums.ProfileEnum;
 import br.com.odevpedro.user_service_api.entity.User;
 import br.com.odevpedro.user_service_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import models.enums.ProfileEnum;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,6 +23,6 @@ public class UserServiceApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-	userRepository.save(new User(null, "odev pedro", "odevpedro@mail.com", "12345", Set.of(ProfileEnum.PROFILE_ROLE_ADMIN)));
+	userRepository.save(new User(null, "odev pedro", "odevpedro@mail.com", "12345", Set.of(ProfileEnum.ROLE_TECHNICIAN)));
 	}
 }

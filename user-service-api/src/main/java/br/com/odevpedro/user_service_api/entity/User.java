@@ -1,10 +1,10 @@
 package br.com.odevpedro.user_service_api.entity;
 
-import br.com.odevpedro.hd_commons_lib.models.enums.ProfileEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.With;
+import models.enums.ProfileEnum;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package models.enuns;
+package models.enums;
 
 import java.util.Arrays;
 
