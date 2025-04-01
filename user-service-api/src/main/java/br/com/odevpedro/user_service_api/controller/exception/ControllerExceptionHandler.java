@@ -3,7 +3,6 @@ package br.com.odevpedro.user_service_api.controller.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import models.expections.RessourceNotFoundExpection;;
 import models.expections.StandartError;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
