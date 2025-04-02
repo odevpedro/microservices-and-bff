@@ -8,11 +8,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import models.expections.StandartError;
+import models.requests.CreateUserRequest;
 import models.responses.UserResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 @Tag(name = "UserController", description = "Controller responsible for user operations")
@@ -43,4 +44,25 @@ public interface UserController {
     ResponseEntity<UserResponse> findById(
             @Parameter(description = "User id", required = true,example = "67d9cdef62d0f253a6adb1ac")
             @PathVariable(name = "id") final String id);
+
+
+
+    @Operation(summary = "Save new User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User Created"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content =
+            @Content(mediaType = APPLICATION_JSON_VALUE,schema = @Schema(implementation = StandartError.class)
+                    )),
+
+            @ApiResponse(responseCode = "500", description = "Internal Error",
+                    content = @Content(
+                    mediaType = APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = StandartError.class)
+            ))
+    })
+    @PostMapping
+    ResponseEntity<Void> save(
+            @RequestBody final CreateUserRequest createUserRequest
+    );
+
 }
