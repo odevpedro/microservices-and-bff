@@ -5,6 +5,7 @@ import models.expections.RessourceNotFoundExpection;;
 import models.expections.StandartError;
 import models.expections.ValidationException;
 import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,6 +22,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
+    //No caso de buscar um id e não encontrar
     @ExceptionHandler(RessourceNotFoundExpection.class)
     ResponseEntity<?> handleNotFoundException (
             final RessourceNotFoundExpection ex, final HttpServletRequest request
@@ -36,10 +38,25 @@ public class ControllerExceptionHandler {
         );
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<StandartError> handleMethodArgumentNotValidException (
-            final MethodArgumentNotValidException ex, final HttpServletRequest request
+    //No caso de buscar um id e não encontrar
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    ResponseEntity<?> handleDataIntegrityViolationException (
+            final DataIntegrityViolationException ex, final HttpServletRequest request
     ) {
+        return ResponseEntity.badRequest().body(
+                StandartError.builder()
+                        .timeStamp(now())
+                        .status(BAD_REQUEST.value())
+                        .error(BAD_REQUEST.getReasonPhrase())
+                        .message(ex.getMessage())
+                        .path(request.getRequestURI())
+                        .build()
+        );
+    }
+
+    //Caso falte algum argumento na criação
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    ResponseEntity<StandartError> handleMethodArgumentNotValidException (final MethodArgumentNotValidException ex, final HttpServletRequest request) {
         var error = ValidationException.builder()
                 .timeStamp(now())
                 .status(BAD_REQUEST.value()).

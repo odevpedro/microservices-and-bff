@@ -2,14 +2,14 @@ package br.com.odevpedro.user_service_api.controller.Impl;
 
 import br.com.odevpedro.user_service_api.Service.UserService;
 import br.com.odevpedro.user_service_api.controller.UserController;
-import br.com.odevpedro.user_service_api.entity.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import models.requests.CreateUserRequest;
 import models.responses.UserResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -23,6 +23,13 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<UserResponse> findById(final String id) {
         return ResponseEntity.ok().body(userService.findById(id));
     }
+
+    //Implementação funcional
+    public ResponseEntity<UserResponse> findByIdo(final String id) {
+        return Optional.ofNullable(userService.findById(id))
+                .map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
     @Override
     public ResponseEntity<Void> save( @Valid final CreateUserRequest createUserRequest) {

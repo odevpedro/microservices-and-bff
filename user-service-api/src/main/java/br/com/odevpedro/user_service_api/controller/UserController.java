@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import models.expections.StandartError;
 import models.requests.CreateUserRequest;
 import models.responses.UserResponse;
@@ -42,7 +43,7 @@ public interface UserController {
 
     @GetMapping("/{id}")
     ResponseEntity<UserResponse> findById(
-            @Parameter(description = "User id", required = true,example = "67d9cdef62d0f253a6adb1ac")
+            @Parameter(description = "User id", required = true, example = "67d9cdef62d0f253a6adb1ac")
             @PathVariable(name = "id") final String id);
 
 
@@ -62,7 +63,7 @@ public interface UserController {
     })
     @PostMapping
     ResponseEntity<Void> save(
-            @RequestBody final CreateUserRequest createUserRequest
+            @Valid @RequestBody final CreateUserRequest createUserRequest
     );
 
 }

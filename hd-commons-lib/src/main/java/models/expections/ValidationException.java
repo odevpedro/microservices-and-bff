@@ -20,7 +20,7 @@ public class ValidationException extends StandartError {
     }
 
     public void addError(String fieldname, final String message){
-        this.errors.add(new FieldError(fieldname, message));
+        this.errors.add(new FieldError(fieldname, message)); //criar uma lista de erro conforme não há conformidade
     }
 
 }
