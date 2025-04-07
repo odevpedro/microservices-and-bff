@@ -1,11 +1,13 @@
 package br.com.odevpedro.user_service_api.Service;
 
 
+import br.com.odevpedro.user_service_api.entity.User;
 import br.com.odevpedro.user_service_api.mapper.UserMapper;
 import br.com.odevpedro.user_service_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import models.expections.RessourceNotFoundExpection;
 import models.requests.CreateUserRequest;
+import models.requests.UpdateUserRequest;
 import models.responses.UserResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,9 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserResponse findById(final String id) {
-        return  userMapper.fromEntity(userRepository.findById(id).orElseThrow( () -> new RessourceNotFoundExpection("Object not found" + id + ", Type: " +
-                UserResponse.class.getSimpleName())));}
+        return  userMapper.fromEntity(find(id));
+
+    }
 
     public void save(CreateUserRequest createUserRequest) {
         verifyIfEmailAlreadyExists(createUserRequest.email(), null);
@@ -42,5 +45,19 @@ public class UserService {
                 .map(user -> userMapper.
                         fromEntity(user)).toList();
                 //vamos mapear cada usuário para dto
+    }
+
+    public UserResponse update(final String id, final UpdateUserRequest updateUserRequest) {
+        User entity = find(id);
+        verifyIfEmailAlreadyExists(updateUserRequest.email(), id);
+        return  userMapper.fromEntity(userRepository.save(userMapper.update(updateUserRequest, entity)));
+
+
+    }
+
+    private User find(String id){
+        return userRepository.findById(id).orElseThrow(() -> new RessourceNotFoundExpection(
+                "Object not found. Id: " + id + ", Type: " + UserResponse.class.getSimpleName()
+        ) );
     }
 }
