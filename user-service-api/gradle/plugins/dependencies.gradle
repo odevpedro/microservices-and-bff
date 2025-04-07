@@ -42,6 +42,10 @@ dependencies {
 
     // Dependência de teste
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //Bcrypt
+    implementation 'org.springframework.security:spring-security-crypto:5.8.5'
+
 }
 
 dependencyManagement {

@@ -10,17 +10,17 @@ import models.requests.CreateUserRequest;
 import models.requests.UpdateUserRequest;
 import models.responses.UserResponse;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder encoder;
 
     public UserResponse findById(final String id) {
         return  userMapper.fromEntity(find(id));
@@ -29,7 +29,21 @@ public class UserService {
 
     public void save(CreateUserRequest createUserRequest) {
         verifyIfEmailAlreadyExists(createUserRequest.email(), null);
-        userRepository.save(userMapper.fromRequest(createUserRequest));
+        userRepository.save(userMapper.fromRequest(createUserRequest)
+                .withPassword(encoder.encode(createUserRequest.password())));
+
+    }
+
+    public UserResponse update(final String id, final UpdateUserRequest updateUserRequest) {
+
+        User entity = find(id);
+        verifyIfEmailAlreadyExists(updateUserRequest.email(), id);
+
+        String password = updateUserRequest.password() != null ? encoder.encode(updateUserRequest.password()): entity.getPassword();
+
+        User userUpdated =  userMapper.update(updateUserRequest, entity).withPassword(password);
+
+        return userMapper.fromEntity(userRepository.save(userUpdated));
 
     }
 
@@ -42,17 +56,8 @@ public class UserService {
 
     public List<UserResponse> findAll() {
         return userRepository.findAll().stream()
-                .map(user -> userMapper.
-                        fromEntity(user)).toList();
+                .map(userMapper::fromEntity).toList();
                 //vamos mapear cada usuário para dto
-    }
-
-    public UserResponse update(final String id, final UpdateUserRequest updateUserRequest) {
-        User entity = find(id);
-        verifyIfEmailAlreadyExists(updateUserRequest.email(), id);
-        return  userMapper.fromEntity(userRepository.save(userMapper.update(updateUserRequest, entity)));
-
-
     }
 
     private User find(String id){
