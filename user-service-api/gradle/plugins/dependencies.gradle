@@ -46,6 +46,10 @@ dependencies {
     //Bcrypt
     implementation 'org.springframework.security:spring-security-crypto:5.8.5'
 
+    //Mockito
+    testImplementation 'org.mockito:mockito-inline:4.11.0'
+
+
 }
 
 dependencyManagement {

@@ -18,13 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
+
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder encoder;
 
     public UserResponse findById(final String id) {
         return  userMapper.fromEntity(find(id));
-
     }
 
     public void save(CreateUserRequest createUserRequest) {
