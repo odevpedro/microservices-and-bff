@@ -26,7 +26,6 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok().body(userService.findById(id));
     }
 
-    //Implementação funcional
     public ResponseEntity<UserResponse> findByIdo(final String id) {
         return Optional.ofNullable(userService.findById(id))
                 .map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());

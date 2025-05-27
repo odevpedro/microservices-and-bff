@@ -36,7 +36,7 @@ public class UserService {
 
     public UserResponse update(final String id, final UpdateUserRequest updateUserRequest) {
 
-        User entity = find(id);
+        User entity = find(id); //verifico se o id existe.
         verifyIfEmailAlreadyExists(updateUserRequest.email(), id);
 
         String password = updateUserRequest.password() != null ? encoder.encode(updateUserRequest.password()): entity.getPassword();
@@ -47,9 +47,8 @@ public class UserService {
 
     }
 
-    private void verifyIfEmailAlreadyExists(final String email, final String id){
-        userRepository.findByEmail(email)
-                .filter(user -> !user.getId().equals(id)).
+    private void verifyIfEmailAlreadyExists(final String email, final String id) {
+        userRepository.findByEmail(email).filter(user -> !user.getId().equals(id)).
                 ifPresent(user -> { throw new DataIntegrityViolationException("Email already exists: " + email);
     });
     }
@@ -57,7 +56,6 @@ public class UserService {
     public List<UserResponse> findAll() {
         return userRepository.findAll().stream()
                 .map(userMapper::fromEntity).toList();
-                //vamos mapear cada usuário para dto
     }
 
     private User find(String id){
