@@ -1,5 +1,6 @@
 package br.com.odevpedro.user_service_api.Service;
 
+import br.com.odevpedro.user_service_api.creator.CreatorUtils;
 import br.com.odevpedro.user_service_api.entity.User;
 import br.com.odevpedro.user_service_api.mapper.UserMapper;
 import br.com.odevpedro.user_service_api.repository.UserRepository;
@@ -11,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
@@ -100,7 +102,28 @@ class UserServiceTest {
         verify(mapper).fromRequest(request);
         verify(encoder).encode(request.password());
         verify(repository).save(any(User.class));
-        verify(repository).findByEmail(request.email()); // ⚠️ Provável erro aqui
+        verify(repository).findByEmail(request.email());
+    }
+
+    @Test
+    void whenCallSaveWithInvalidEmailThenThrowDataIntegrityViolationException() {
+        final var request = CreatorUtils.generateMock(CreateUserRequest.class);
+        final var entity = CreatorUtils.generateMock(User.class);
+
+        when(repository.findByEmail(anyString()))
+                .thenReturn(Optional.of(entity));
+
+        var exception = assertThrows(
+                DataIntegrityViolationException.class,
+                () -> service.save(request)
+        );
+
+        assertEquals("Email already exists: " + request.email(), exception.getMessage());
+
+        verify(repository).findByEmail(request.email());
+        verify(mapper, times(0)).fromRequest(request);
+        verify(encoder, times(0)).encode(request.password());
+        verify(repository, times(0)).save(any(User.class));
     }
 
 
