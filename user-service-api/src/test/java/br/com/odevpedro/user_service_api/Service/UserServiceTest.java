@@ -4,6 +4,7 @@ import br.com.odevpedro.user_service_api.entity.User;
 import br.com.odevpedro.user_service_api.mapper.UserMapper;
 import br.com.odevpedro.user_service_api.repository.UserRepository;
 import models.expections.RessourceNotFoundExpection;
+import models.requests.CreateUserRequest;
 import models.responses.UserResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
+
+import static br.com.odevpedro.user_service_api.creator.CreatorUtils.generateMock;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -38,7 +41,7 @@ class UserServiceTest {
     void whenCallFindByIdWithValidIdThenReturnUserResponse(){
 
         when(repository.findById(anyString())).thenReturn(Optional.of(new User()));
-        when(mapper.fromEntity(any(User.class))).thenReturn(mock(UserResponse.class));
+        when(mapper.fromEntity(any(User.class))).thenReturn(generateMock(UserResponse.class));
         final var response = service.findById("1");
 
         assertNotNull(response);
@@ -73,11 +76,31 @@ class UserServiceTest {
         final var response = service.findAll();
 
         assertNotNull(response);
-        assertEquals(2, response.size()); // Esperado que size seja 1, como no teste original
+        assertEquals(2, response.size());
         assertEquals(UserResponse.class, response.get(0).getClass());
 
         verify(repository, times(1)).findAll();
         verify(mapper, times(2)).fromEntity(any(User.class));
+    }
+
+    @Test
+    void whenCallSaveThenSuccess() {
+        // Arrange
+        final var request = generateMock(CreateUserRequest.class);
+
+        when(mapper.fromRequest(any())).thenReturn(new User());
+        when(encoder.encode(anyString())).thenReturn("encoded");
+        when(repository.save(any(User.class))).thenReturn(new User());
+        when(repository.findByEmail(anyString())).thenReturn(Optional.empty());
+
+        // Act
+        service.save(request);
+
+        // Assert
+        verify(mapper).fromRequest(request);
+        verify(encoder).encode(request.password());
+        verify(repository).save(any(User.class));
+        verify(repository).findByEmail(request.email()); // ⚠️ Provável erro aqui
     }
 
 
