@@ -47,7 +47,7 @@ public class ControllerExceptionHandler {
         );
     }
 
-    //Caso falte algum argumento na criação
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<StandartError> handleMethodArgumentNotValidException (final MethodArgumentNotValidException ex, final HttpServletRequest request) {
         var error = ValidationException.builder()

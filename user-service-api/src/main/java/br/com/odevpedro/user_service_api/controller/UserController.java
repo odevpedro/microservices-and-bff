@@ -1,6 +1,6 @@
 package br.com.odevpedro.user_service_api.controller;
 
-import br.com.odevpedro.user_service_api.entity.User;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

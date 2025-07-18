@@ -36,7 +36,7 @@ public class UserService {
 
     public UserResponse update(final String id, final UpdateUserRequest updateUserRequest) {
 
-        User entity = find(id); //verifico se o id existe.
+        User entity = find(id);
         verifyIfEmailAlreadyExists(updateUserRequest.email(), id);
 
         String password = updateUserRequest.password() != null ? encoder.encode(updateUserRequest.password()): entity.getPassword();

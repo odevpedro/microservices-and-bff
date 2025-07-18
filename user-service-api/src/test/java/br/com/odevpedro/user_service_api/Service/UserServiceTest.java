@@ -3,6 +3,7 @@ package br.com.odevpedro.user_service_api.Service;
 import br.com.odevpedro.user_service_api.entity.User;
 import br.com.odevpedro.user_service_api.mapper.UserMapper;
 import br.com.odevpedro.user_service_api.repository.UserRepository;
+import models.expections.RessourceNotFoundExpection;
 import models.responses.UserResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,7 +19,6 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserServiceTest {
-    //criando componentes de mentira:
     @InjectMocks
     private UserService service;
 
@@ -32,7 +32,6 @@ class UserServiceTest {
     private BCryptPasswordEncoder encoder;
 
 
-    //cenário feliz
     @Test
     void whenCallFindByIdWithValidIdThenReturnUserResponse(){
 
@@ -43,10 +42,24 @@ class UserServiceTest {
         assertNotNull(response);
         assertEquals(UserResponse.class, response.getClass());
 
-        //É importante especificar quantas vezes o repository esperava ser chamado
         verify(repository, Mockito.times(1)).findById(anyString());
         verify(mapper, times(1)).fromEntity(any(User.class));
 
+    }
+
+
+    @Test
+    void whenCallFindByIdWithInvalidIdThenThrowResourceNotFoundException() {
+        when(repository.findById(anyString())).thenReturn(Optional.empty());
+
+        try {
+            service.findById("1");
+        } catch (Exception e) {
+            assertEquals(RessourceNotFoundExpection.class, e.getClass());
+            assertEquals("Objects not found. Id: 1. Type: UserResponse", e.getMessage());
+        }
+        verify(repository, times(1)).findByEmail(anyString());
+        verify(mapper, times(0)).fromEntity(any(User.class));
     }
 
 
