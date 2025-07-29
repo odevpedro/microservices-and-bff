@@ -23,6 +23,6 @@ public class UserServiceApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-	userRepository.save(new User(null, "odev pedro", "odevpedro@mail.com", "12345", Set.of(ProfileEnum.ROLE_TECHNICIAN)));
+	userRepository.save(new User(null, "odev pedro", "odevpedro@gmail.com", "12345", Set.of(ProfileEnum.ROLE_TECHNICIAN)));
 	}
 }

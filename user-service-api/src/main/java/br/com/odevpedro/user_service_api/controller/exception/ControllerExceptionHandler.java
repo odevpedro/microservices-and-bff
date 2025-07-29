@@ -25,7 +25,7 @@ public class ControllerExceptionHandler {
                 StandartError.builder()
                         .timeStamp(now())
                         .status(NOT_FOUND.value())
-                        .error("Ressource not found")
+                        .error("Not Found")
                         .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .build()
